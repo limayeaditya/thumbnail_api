@@ -9,6 +9,10 @@ describe('Thumbnail API', ()=>{
         user: "anyuser",
         passsword: "anypassword"
     };
+    const invalidLoginDetails = {
+        user: "",
+        passsword: ""
+    };
 
     //Token variable to store generated token
     let token;
@@ -18,7 +22,17 @@ describe('Thumbnail API', ()=>{
     const invalidImageURL = 'https://i.ibb.co/wdjpq4W/lyricviz-app-icon';
 
     describe('Mock Authentication', () => {
-        it('should accept username and password to return a token',
+        it('should deny empty username and password input fields',
+            (done) => {
+              request.agent(app)
+                  .post('/')
+                  .send(invalidLoginDetails)
+                  .end((err, res) => {
+                    expect(res.statusCode).to.equal(402);
+                    done();
+                  });
+            });
+            it('should accept username and password to return a token',
             (done) => {
               request.agent(app)
                   .post('/')

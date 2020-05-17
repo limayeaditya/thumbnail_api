@@ -4,6 +4,7 @@ var jwt = require('jsonwebtoken');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var upload = multer();
+const {body, validationResult} = require('express-validator');
 
 //include token verification and thumbnail generation
 var middlewares = require('./middlewares');
@@ -17,22 +18,6 @@ const key = require('./key');
 //make the thumbnails folder static
 app.use(express.static('thumbnails'));
 
-/**
- * Render login on http://localhost:3000/
- * @param {string} path - Render on given path
- * @param {Function} - Express response on path specified
- */
-app.get('/', function(req, res){
-   res.render('login');
-});
-
-
-/**
- * Set view engine to PUG
- */
-app.set('view engine', 'pug');
-app.set('views', './views');
-
 // for parsing application/json
 app.use(bodyParser.json()); 
 
@@ -45,16 +30,36 @@ app.use(upload.array());
 app.use(express.static('public'));
 
 
-app.post('/', function(req, res){
-    
-    const user = req.body.user.toLowerCase();
-    const password = req.body.password;
-    let token = jwt.sign(user, key.secret);
+//Validate request and express to recieve the token
+app.post('/', 
 
-    //pass the token as response 
-    res.status(200).json({token: token, user: user, authorization: true});
+//Set validation parameters
+body('user', 'Username is required.')
+.isLength({min: 1}),
 
-});
+//Validate request and express to recieve the token
+    (req, res) => {
+
+        // Save errors from validation, if any.
+        const errors = validationResult(req);
+
+//Check if invalid
+    if(!errors.isEmpty()){
+        
+        res.status(402).send('Invalid');
+
+    } else { 
+
+        const user = req.body.user.toLowerCase();
+        const password = req.body.password;
+        let token = jwt.sign(user, key.secret);
+
+        //pass the token as response 
+        res.status(200).json({token: token, user: user, authorization: true});
+
+    }
+}
+);
 
 //initially verifies the token and then generates the thumbnail
 app.get('/image',middlewares.validity,middlewares.thumbnailCreation,(req,res)=>{
