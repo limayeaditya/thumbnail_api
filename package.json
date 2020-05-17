@@ -1,10 +1,12 @@
 {
-  "name": "trynode",
+  "name": "thumbnail_api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "./node_modules/.bin/jsdoc -c jsdoc.json"
+     
   },
   "author": "Aditya",
   "license": "ISC",
@@ -18,5 +20,8 @@
     "node-localstorage": "^2.1.6",
     "pug": "^2.0.4",
     "resize-img": "^2.0.0"
+  },
+  "devDependencies": {
+    "jsdoc": "^3.6.4"
   }
 }

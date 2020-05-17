@@ -32,12 +32,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(upload.array()); 
 app.use(express.static('public'));
 
-//fetch the username and generate token for authentication
+
 app.post('/', function(req, res){
     const user = req.body.user.toLowerCase();
     const password = req.body.password;
     let token = jwt.sign(user, key.secret);
-    //pass the token as response
+    //pass the token as response 
     res.status(200).json({token: token, user: user, authorization: true});
 
 });
