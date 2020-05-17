@@ -64,7 +64,7 @@ This request contains a public image URL. It downloads the image, resizes to 50x
 }
 ```
 ### JSDocs 
-JSDocs is included in _../docs/index.html_
+JSDocs is included in ``` _../docs/index.html_```.
 
 ## Unit Testing
 
