@@ -66,3 +66,5 @@ app.get('/image',middlewares.validity,middlewares.thumbnailCreation,(req,res)=>{
 
 //listening on port 3000
 app.listen(3000);
+
+module.exports = app;

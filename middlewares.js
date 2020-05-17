@@ -17,7 +17,7 @@ const validity = (req,res,next)=>{
 	if(token){
 		jwt.verify(token, key.secret, function(err, decoded) {
 			if (err) {
-				res.send('Unauthorized');
+				res.status(401).send('Unauthorized');
 				//token invalid
 			}
 			else{
@@ -27,7 +27,7 @@ const validity = (req,res,next)=>{
 		});
 	}
 	else{
-		res.send('Token is missing')
+		res.status(401).send('Token is missing')
 		//token is missing
 	}
 	
@@ -59,10 +59,10 @@ const thumbnailCreation = (req,res,next)=>{
 			resizeImg(fs.readFileSync(filename), {width:50, height:50}).then(buf => {
 				fs.writeFileSync("./thumbnails/"+filename, buf); //download the image resized to thumbnail
 		
-				res.json({thumbnail: './'+filename}); //send json including link to new thumbnail as response
-			next();
+				res.status(200).json({thumbnail: './'+filename}); //send json including link to new thumbnail as response
+			
 		}).catch((err) => {
-			res.send("Error"); //error found
+			res.status(400).send("Error"); //error found
 			
 		});
  
@@ -71,7 +71,7 @@ const thumbnailCreation = (req,res,next)=>{
 
 	else{
 
-		res.send('File extensions allowed- [bmp,png,jpg]'); //response for invalid file extension
+		res.status(400).send('File extensions allowed- [bmp,png,jpg]'); //response for invalid file extension
 	}
 
 };
