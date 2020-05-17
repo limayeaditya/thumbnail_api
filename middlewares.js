@@ -34,12 +34,12 @@ const validity = (req,res,next)=>{
 };
 
 /**
- * Create the thumbnail of the image
+ * Create the thumbnail of the image in ""
  * @param {Object} req - Express request object 
  * @param {Object} res - Express response object
  * @param {Function} next - Express next middleware function, on successful verification
  */
-const ThumbnailCreation = (req,res,next)=>{
+const thumbnailCreation = (req,res,next)=>{
 	
 	let url = req.body.url; //image URL 
 	let ext = path.extname(url).trim(); //trims the image name from the URL
@@ -78,4 +78,4 @@ const ThumbnailCreation = (req,res,next)=>{
 
 module.exports.validity = validity;
 
-module.exports.ThumbnailCreation = ThumbnailCreation;
+module.exports.thumbnailCreation = thumbnailCreation;
