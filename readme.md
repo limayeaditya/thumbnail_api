@@ -1,6 +1,6 @@
 # Stateless Microservice for CashFlo
 
-A simple stateless microservice in Nodejs, with three major functionalities -
+A simple stateless microservice in Nodejs, with two major functionalities -
 
  * Authentication
  * Image Thumbnail Generation
@@ -63,7 +63,8 @@ This request contains a public image URL. It downloads the image, resizes to 50x
     "converted": true
 }
 ```
-
+### JSDocs 
+JSDocs is included in _../docs/index.html_
 
 ## Unit Testing
 
@@ -79,6 +80,7 @@ Run ```npm test``` from the application's root directory.
  * [Node.js](https://nodejs.org)
  * [Express](https://expressjs.com/)
  * [Mocha](https://mochajs.org/) - For testing
+
 
 
 
