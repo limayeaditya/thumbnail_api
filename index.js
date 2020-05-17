@@ -45,6 +45,8 @@ app.post('/',
 //Set validation parameters
 body('username', 'Username is required.')
 .isLength({min: 1}),
+body('password','Password is required')
+.isLength({min:1}),
 
 //Validate request and express to recieve the token
     (req, res) => {
@@ -55,12 +57,12 @@ body('username', 'Username is required.')
 //Check if invalid
     if(!errors.isEmpty()){
         
-        res.status(402).send('Invalid');
+        res.status(401).send('Invalid');
 
     } else { 
 
         const username = req.body.username.toLowerCase();
-        const password = req.body.password;
+        
         let token = jwt.sign(username, key.secret);
 
         //pass the token as response 

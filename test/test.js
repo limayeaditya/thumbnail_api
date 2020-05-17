@@ -7,11 +7,11 @@ describe('Thumbnail API', ()=>{
     //Create dummy login data
     const loginDetails = {
         username: "anyuser",
-        passsword: "anypassword"
+        password: "anypassword"
     };
     const invalidLoginDetails = {
         username: "",
-        passsword: ""
+        password: ""
     };
 
     //Token variable to store generated token
@@ -22,13 +22,13 @@ describe('Thumbnail API', ()=>{
     const invalidImageURL = 'https://i.ibb.co/wdjpq4W/lyricviz-app-icon';
 
     describe('Mock Authentication', () => {
-        it('should deny empty username and password input fields',
+        it('should deny empty username or password input fields',
             (done) => {
               request.agent(app)
                   .post('/')
                   .send(invalidLoginDetails)
                   .end((err, res) => {
-                    expect(res.statusCode).to.equal(402);
+                    expect(res.statusCode).to.equal(401);
                     done();
                   });
             });
