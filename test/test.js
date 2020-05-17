@@ -6,11 +6,11 @@ const app = require('../index')
 describe('Thumbnail API', ()=>{
     //Create dummy login data
     const loginDetails = {
-        user: "anyuser",
+        username: "anyuser",
         passsword: "anypassword"
     };
     const invalidLoginDetails = {
-        user: "",
+        username: "",
         passsword: ""
     };
 

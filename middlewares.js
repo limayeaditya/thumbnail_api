@@ -59,10 +59,10 @@ const thumbnailCreation = (req,res,next)=>{
 			resizeImg(fs.readFileSync(filename), {width:50, height:50}).then(buf => {
 				fs.writeFileSync("./thumbnails/"+filename, buf); //download the image resized to thumbnail
 		
-				res.status(200).json({thumbnail: './'+filename}); //send json including link to new thumbnail as response
+				res.status(200).json({thumbnail: './'+filename, converted: true}); //send json including link to new thumbnail as response
 			
 		}).catch((err) => {
-			res.status(400).send("Error"); //error found
+			res.status(400).send(err); //error found
 			
 		});
  

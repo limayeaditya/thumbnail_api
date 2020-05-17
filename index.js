@@ -9,14 +9,20 @@ var bodyParser = require('body-parser');
 var multer = require('multer');
 var upload = multer();
 
+
+const {body, validationResult} = require('express-validator');
+
+
 //include token verification and thumbnail generation
 var middlewares = require('./middlewares');
+
 
 /**
  * Required for token generation along with username
  * @type {string}
  */
 const key = require('./key');
+
 
 //make the thumbnails folder static
 app.use(express.static('thumbnails'));
@@ -37,7 +43,7 @@ app.use(express.static('public'));
 app.post('/', 
 
 //Set validation parameters
-body('user', 'Username is required.')
+body('username', 'Username is required.')
 .isLength({min: 1}),
 
 //Validate request and express to recieve the token
@@ -53,12 +59,12 @@ body('user', 'Username is required.')
 
     } else { 
 
-        const user = req.body.user.toLowerCase();
+        const username = req.body.username.toLowerCase();
         const password = req.body.password;
-        let token = jwt.sign(user, key.secret);
+        let token = jwt.sign(username, key.secret);
 
         //pass the token as response 
-        res.status(200).json({token: token, user: user, authorization: true});
+        res.status(200).json({token: token, username: username, authorization: true});
 
     }
 }
