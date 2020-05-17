@@ -34,7 +34,7 @@ npm install
 
 ## Testing the API routes.
 
-Since this is mostly an API with post and patch requests, testing will be done with [Postman](https://www.getpostman.com/)
+Since this is mostly an API with post requests, testing will be done with [Postman](https://www.getpostman.com/)
 
 ### Authentication
 This is a mock authentication so you can pass in any username or password to login.
@@ -63,7 +63,7 @@ This request contains a public image URL. It downloads the image, resizes to 50x
     "converted": true
 }
 ```
-### JSDoc 
+## JSDoc 
 JSDoc is included in ```../docs/index.html```.
 
 ## Unit Testing
