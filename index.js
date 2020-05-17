@@ -1,10 +1,13 @@
 var express = require('express');
 var app = express();
+
+//to generate token
 var jwt = require('jsonwebtoken');
 var bodyParser = require('body-parser');
+
+//handle multipart/form data
 var multer = require('multer');
 var upload = multer();
-const {body, validationResult} = require('express-validator');
 
 //include token verification and thumbnail generation
 var middlewares = require('./middlewares');

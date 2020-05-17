@@ -42,6 +42,97 @@
 
 
 
+    <section>
+        <article><h1>Stateless Microservice for Hackerbay</h1>
+<p>A simple stateless microservice in Nodejs, with three major functionalities -</p>
+<ul>
+<li>Authentication</li>
+<li>JSON patching</li>
+<li>Image Thumbnail Generation</li>
+</ul>
+<h2>Setup</h2>
+<p>The API requires <a href="https://nodejs.org/en/download/">Node.js</a></p>
+<p>To get up and running:</p>
+<p><strong>1.</strong> Clone the repo.</p>
+<pre class="prettyprint source"><code>git clone https://github.com/twumm/stateless-microservice-hackerbay.git
+</code></pre>
+<p><strong>2.</strong>  <code>cd</code> into repo. Use the same directory name(below) if you do not change it.</p>
+<pre class="prettyprint source"><code>cd stateless-microservice-hackerbay
+</code></pre>
+<p><strong>3.</strong>  Setup the application by installing its dependencies with</p>
+<pre class="prettyprint source"><code>npm install
+</code></pre>
+<p><strong>4.</strong>  The app gets up and running on port 3000 with <code>npm start</code>.</p>
+<p><strong>5.</strong>  <strong>Important</strong> Create a <code>.env</code> file and set <code>jwtSecret</code> to any secret phrase you want.</p>
+<h2>Testing the API routes.</h2>
+<p>Since this is mostly an API with post and patch requests, testing will be done with <a href="https://www.getpostman.com/">Postman</a></p>
+<h3>Authentication</h3>
+<p>This is a mock authentication so you can pass in any username or password to login.</p>
+<ol>
+<li>Set the request to <strong>POST</strong> and the url to <em>/api/users/login</em>.</li>
+<li>In the <strong>Body</strong> for the Postman request, select <strong>x-www-form-urlencoded</strong>.</li>
+<li>You will be setting 2 keys (for username and password). Set the <code>username</code> key to any name. Set <code>password</code> to any password (minimum of 6 characters).</li>
+<li>Hit <code>Send</code>. You will get a result in this format:</li>
+</ol>
+<pre class="prettyprint source"><code>{
+   &quot;user&quot;: &quot;moi&quot;,
+   &quot;authorized&quot;: true,
+   &quot;token&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vaSIsImlhdCI6MTUzMjAwNDkwMSwiZXhwIjoxNTMyMDI2NTAxfQ.sonItbpZ_yKsRLDXNfDqwN6yN5VbdMVDhgKAMxDmPFY&quot;
+}
+</code></pre>
+<h3>JSON patching</h3>
+<p>Apply json patch to a json object, and return the resulting json object.</p>
+<ol>
+<li>Set the request to <strong>PATCH</strong> and the url to <em>/api/patch-object</em>.</li>
+<li>Set the key <code>jsonObject</code> to an object you would like to patch. Set the key <code>jsonPatchObject</code> to the object you want to use to patch the <code>jsonObject</code>.</li>
+</ol>
+<pre class="prettyprint source"><code>Examples:
+jsonObject
+{ &quot;user&quot;: { &quot;firstName&quot;: &quot;Albert&quot;, &quot;lastName&quot;: &quot;Einstein&quot; } }
+
+jsonPatchObject
+[{&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/user/firstName&quot;, &quot;value&quot;: &quot;Leonardo&quot;}, {&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/user/lastName&quot;, &quot;value&quot;: &quot;da Vinci&quot;}]
+</code></pre>
+<ol start="3">
+<li>Since this is a secure route, for testing, you will have to set the token in the <code>Header</code>. Set key as <code>token</code> and value as token you received from <strong>Authentication</strong>.</li>
+<li>Expected result should be:</li>
+</ol>
+<pre class="prettyprint source"><code>{ &quot;user&quot;: { &quot;firstName&quot;: &quot;Leonardo&quot;, &quot;lastName&quot;: &quot;da Vinci&quot; } }
+</code></pre>
+<h3>Image Thumbnail Generation</h3>
+<p>This request contains a public image URL. It downloads the image, resizes to 50x50 pixels, and returns the resulting thumbnail.</p>
+<ol>
+<li>Set the request to <strong>POST</strong> and the url to <em>/api/create-thumbnail</em>.</li>
+<li>Set the key <code>imageUrl</code> to a public image url.</li>
+<li>Since this is a secure route, for testing, you will have to set the token in the <code>Header</code>. Set key as <code>token</code> and value as token you received from <strong>Authentication</strong>.</li>
+<li>Image will be downloaded and converted to a thumbnail of size 50x50 pixels with a sample result as below:</li>
+</ol>
+<pre class="prettyprint source"><code>{
+   &quot;converted&quot;: true,
+   &quot;user&quot;: &quot;moi&quot;,
+   &quot;success&quot;: &quot;Image has been resized&quot;,
+   &quot;thumbnail&quot;: &quot;./public/images/resized/&quot;
+}
+</code></pre>
+<h2>Unit Testing</h2>
+<p>Unit testing is done using mochai.</p>
+<p>Run <code>npm test</code> from the application's root directory.</p>
+<h2>Logging</h2>
+<p>All logs are saved in <code>hackerbay.log</code> in the application's root.</p>
+<h2>Built With</h2>
+<ul>
+<li><a href="https://nodejs.org">Node.js</a></li>
+<li><a href="https://expressjs.com/">Express</a></li>
+<li><a href="https://mochajs.org/">Mocha</a> - For testing</li>
+</ul>
+<h2>Known Issues</h2>
+<ol>
+<li>Test for thumbnail generation with <a href="https://mochajs.org/">Mocha</a> <em>'it should accept a public image url and return a resized image'</em> returns a promise which is currently not being handled properly.</li>
+<li><em>Dockerfile</em> has not been fully tested.</li>
+<li><em>Istanbul</em> coverage not working as expected.</li>
+</ol></article>
+    </section>
+
 
 
 
@@ -56,7 +147,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Sun May 17 2020 12:55:12 GMT+0530 (India Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Sun May 17 2020 15:52:45 GMT+0530 (India Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
